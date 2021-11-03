@@ -2,6 +2,7 @@
 #include <bits/stdc++.h>
 #include <windows.h>
 #include <dos.h>
+#include<ctime>
 
 using namespace std;
 
@@ -158,7 +159,6 @@ public:
             system("color 2");
             cout << " Number of Guess = " << no_of_guess << endl;
             cout << " Either you know the secret or you got lucky\n\n";
-            explain_the_secret(actual_num);
         }
         else if (no_of_guess == 10)
         {
@@ -232,6 +232,7 @@ int Game ::no_of_guess = 0;
 
 int main()
 {
+    srand(time(NULL));
     system("color 3");
     cout << setw(84) << "         ----------------------------------------         \n";
     cout << setw(84) << "                    GUESS THE NUMBER                      \n";
