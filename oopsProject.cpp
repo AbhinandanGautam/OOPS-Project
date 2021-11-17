@@ -1,16 +1,22 @@
 // Guess the number game
-#include <bits/stdc++.h>
-#include <windows.h>
-#include <dos.h>
-#include<ctime>
+#include <bits/stdc++.h> 
+#include <windows.h> // for colors in console output
+#include <dos.h> // sleep() function
+#include <ctime> // srand() function
 
 using namespace std;
 
-bool flag = true;
+bool flag = true; // global variable to check if num is guessed acurrately or not
 
+
+/*
+secret class to write secret of game 
+seperate class is made so that in future if we want to explain binary search technique we can use this class
+*/
 class secret
 {
 public:
+
     void explain_the_secret(int num)
     {
         system("color B");
@@ -27,7 +33,6 @@ public:
         int x;
         while (1)
         {
-
             x = (a + b) / 2;
             cout << "\tGuess the middle number of your given range i.e : " << x << "\n";
             cout << "         ----------------------------------------         \n";
@@ -63,20 +68,27 @@ public:
 
         cout << "\nIn this way you can guess the number in less than 10 guesses\n";
     }
+
 };
+
+
 //Inheritance of secret class
 class Game : public secret
 {
 private:
+
     int actual_num;
     int guessed_num;
     static int no_of_guess; /*Static member*/
+
 public:
+
     //Static member function
     static void set_no_of_guess(int x)
     {
         no_of_guess = 0;
     }
+
 
     /*
     -> constructor
@@ -89,10 +101,6 @@ public:
         guessed_num = num2;
     }
 
-    /*
-    Declaration of friend function begin()
-   */
-    friend void begin(Game &);
 
     /*
     -> guess_num() function to input guessed number
@@ -103,7 +111,7 @@ public:
     void guess_num()
     {
         int guessNum;
-        system("color E");
+        system("color E"); // light yellow color
         cout << " Enter the guessed number : ";
         cin >> guessNum;
 
@@ -115,7 +123,7 @@ public:
         }
         else
         {
-            system("color 4");
+            system("color 4"); // red color
             cout << " !!!! Wrong Input !!!!\n";
             cout << " You select the number out of range.\n Select number between 1 to 1000\n";
             Sleep(1000);
@@ -123,8 +131,10 @@ public:
         }
     }
 
+    
     /*
     -> help() function to check either number is low and high
+    -> display text according to condition
     */
     void help()
     {
@@ -132,8 +142,7 @@ public:
         {
             system("color 4");
             cout << "\tOh, Wrong Guess\n";
-            cout << "\tActual Number is greater than guessed number.\n"
-                 << setw(22) << "Retry\n\n";
+            cout << "\tActual Number is greater than guessed number.\n" << setw(22) << "Retry\n\n";
             Sleep(1000);
             (*this).guess_num();
         }
@@ -141,12 +150,12 @@ public:
         {
             system("color 4");
             cout << "\tOh, Wrong Guess\n";
-            cout << "\tActual Number is lower than guessed number.\n"
-                 << setw(22) << "Retry\n\n";
+            cout << "\tActual Number is lower than guessed number.\n" << setw(22) << "Retry\n\n";
             Sleep(1000);
             (*this).guess_num();
         }
     }
+
 
     /*
     -> message() function print the accurate message
@@ -171,6 +180,8 @@ public:
             system("color B");
             cout << " Number of Guess = " << no_of_guess << endl;
             cout << " You should be able to do better.\n Why should it take no more than 10 guesses\n\n";
+
+            // explation of secret of game
             cout << "Are you excited to Know the secret of finding number in less than 10 guesses : ";
             cout << "YES\n";
             cout << setw(84) << " NO\n\n";
@@ -179,11 +190,11 @@ public:
             cin >> s;
             if (s == "YES" || s == "Yes" || s == "yes")
             {
-
                 explain_the_secret(actual_num); //is-a relation (Class game has a object of class secret)//class inherited
             }
         }
     }
+
 
     /*
     -> check() function to check guessed number is low, high or correct
@@ -194,27 +205,27 @@ public:
     */
     void check();
 
+
+    /*
+    Declaration of friend function begin()
+   */
+    friend void begin(Game &);
+
+
     ~Game() {} //Destructor
 };
 
-/* ->Friend function of class Game
-   ->Used ti intialize the actual_number
-   -> rand() function to get random number
-   -> rand()%1000 + 1 to get number between 1 to 1000
- */
-void begin(Game &g)
-{
-    int num = rand() % 1000 + 1;
 
-    g.actual_num = num;
-}
+// set static member function to zero
+int Game ::no_of_guess = 0;
+
 
 /* This function is defined outside the class using scope resolution operator ::  */
 void Game ::check()
 {
     if (guessed_num == actual_num)
     {
-        system("color 2");
+        system("color 2"); // green color
         flag = false;
         cout << "\n\t\t\t -----------------------------------";
         cout << "\n\t\t\t Congratulations ^^  ^^ \n \t\t\t You guessed the number correctly.\n";
@@ -228,12 +239,25 @@ void Game ::check()
     }
 }
 
-int Game ::no_of_guess = 0;
+
+/* ->Friend function of class Game
+   ->Used it to intialize the actual_number
+   -> rand() function to get random number
+   -> rand()%1000 + 1 to get number between 1 to 1000
+ */
+void begin(Game &g)
+{
+    int num = rand() % 1000 + 1;
+
+    g.actual_num = num;
+}
+
 
 int main()
 {
-    srand(time(NULL));
-    system("color 3");
+    srand(time(NULL)); // makes use of the computer's internal clock to control the choice of the seed so that we get different seed for rand function
+    system("color 3"); // aqua color
+    // setw() function use to set width
     cout << setw(84) << "         ----------------------------------------         \n";
     cout << setw(84) << "                    GUESS THE NUMBER                      \n";
     cout << setw(84) << "           ----------------------------------------         \n\n";
@@ -252,8 +276,9 @@ int main()
 
         flag = true;
 
-        system("color c");
+        system("color c"); // light red color
         int choice;
+        // sleep function delay for specified amount of time
         Sleep(1200);
         cout << "\n *Press 1 to enter * \n";
         cout << " *Press 0 to exit * \n";
@@ -290,7 +315,7 @@ int main()
         }
         Sleep(2000);
         cout << setw(84) << "           -------------------ThAnX FoR PlAyInG------------------         \n\n";
-        system("Pause");
+        system("Pause"); 
     }
 
     return 0;
